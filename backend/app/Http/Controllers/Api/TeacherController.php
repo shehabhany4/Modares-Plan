@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TeacherController extends Controller
 {
@@ -15,9 +16,10 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
+        $uid = $request->user()->id;
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:teachers,email',
+            'email' => ['required', 'email', Rule::unique('teachers', 'email')->where('user_id', $uid)],
             'phone' => 'nullable|string|max:30',
         ]);
 
@@ -31,9 +33,10 @@ class TeacherController extends Controller
 
     public function update(Request $request, Teacher $teacher)
     {
+        $uid = $teacher->user_id;
         $data = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|unique:teachers,email,' . $teacher->id,
+            'email' => ['sometimes', 'required', 'email', Rule::unique('teachers', 'email')->where('user_id', $uid)->ignore($teacher->id)],
             'phone' => 'nullable|string|max:30',
         ]);
 

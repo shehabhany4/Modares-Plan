@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -15,12 +16,13 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        $uid = $request->user()->id;
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email',
+            'email' => ['required', 'email', Rule::unique('students', 'email')->where('user_id', $uid)],
             'grade' => 'nullable|integer|min:1|max:12',
             'birth_date' => 'nullable|date',
-            'subject_id' => 'nullable|exists:subjects,id',
+            'subject_id' => ['nullable', Rule::exists('subjects', 'id')->where('user_id', $uid)],
         ]);
 
         return response()->json(Student::create($data), 201);
@@ -33,12 +35,13 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
+        $uid = $student->user_id;
         $data = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|unique:students,email,' . $student->id,
+            'email' => ['sometimes', 'required', 'email', Rule::unique('students', 'email')->where('user_id', $uid)->ignore($student->id)],
             'grade' => 'nullable|integer|min:1|max:12',
             'birth_date' => 'nullable|date',
-            'subject_id' => 'nullable|exists:subjects,id',
+            'subject_id' => ['nullable', Rule::exists('subjects', 'id')->where('user_id', $uid)],
         ]);
 
         $student->update($data);

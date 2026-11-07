@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AttendanceController extends Controller
 {
@@ -24,10 +25,15 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
+        $user = $request->user();
+        $studentRule = $user->isAdmin()
+            ? Rule::exists('students', 'id')
+            : Rule::exists('students', 'id')->where('user_id', $user->id);
+
         $data = $request->validate([
             'date' => 'required|date',
             'records' => 'required|array',
-            'records.*.student_id' => 'required|exists:students,id',
+            'records.*.student_id' => ['required', $studentRule],
             'records.*.status' => 'required|in:present,absent,late',
         ]);
 
