@@ -5,7 +5,6 @@ const tabs = [
   ["teachers", "Teachers"],
   ["subjects", "Subjects"],
   ["attendance", "Attendance"],
-  ["attendance", "Attendance"],
 ];
 
 export default function Layout({ page, setPage, onLogout, children }) {
