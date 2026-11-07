@@ -96,7 +96,7 @@ export default function Students() {
             <option value="">No subject</option>
             {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="btn-group">
             <button type="submit">{editId ? "Update" : "Add"}</button>
             {editId && (
               <button type="button" className="ghost" onClick={() => { setEditId(null); setForm(empty); }}>
@@ -109,9 +109,9 @@ export default function Students() {
       </div>
 
       <div className="card">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 14, flexWrap: "wrap" }}>
-          <h2 style={{ margin: 0 }}>Students</h2>
-          <div className="no-print" style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div className="toolbar">
+          <h2>Students</h2>
+          <div className="group no-print">
             <input style={{ width: 200 }} placeholder="🔍 Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
             <button className="ghost sm" onClick={exportCsv}>⬇ CSV</button>
             <button className="ghost sm" onClick={() => window.print()}>🖨 Print</button>

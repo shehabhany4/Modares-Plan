@@ -1,22 +1,22 @@
 import api from "./api";
 
-const tabs = [
-  ["students", "Students"],
-  ["teachers", "Teachers"],
-  ["subjects", "Subjects"],
-  ["attendance", "Attendance"],
-];
+export default function Layout({ page, setPage, user, onLogout, children }) {
+  const tabs = [
+    ["students", "Students"],
+    ["teachers", "Teachers"],
+    ["subjects", "Subjects"],
+    ["attendance", "Attendance"],
+    ...(user.is_admin ? [["admin", "Accounts"]] : []),
+  ];
 
-export default function Layout({ page, setPage, onLogout, children }) {
   const logout = async () => {
     try { await api.post("/logout"); } catch { /* ignore */ }
-    localStorage.removeItem("token");
     onLogout();
   };
 
   return (
     <>
-      <div className="navbar">
+      <div className="navbar no-print">
         <h1>🎓 YSA School Portal</h1>
         <div className="tabs">
           {tabs.map(([key, label]) => (
@@ -29,7 +29,10 @@ export default function Layout({ page, setPage, onLogout, children }) {
             </button>
           ))}
         </div>
-        <button className="light sm" onClick={logout}>Logout</button>
+        <div className="user-box">
+          <span>{user.name}{user.is_admin ? " (Admin)" : ""}</span>
+          <button className="light sm" onClick={logout}>Logout</button>
+        </div>
       </div>
       <div className="container">{children}</div>
     </>

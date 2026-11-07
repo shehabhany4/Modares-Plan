@@ -53,7 +53,7 @@ export default function Teachers() {
           <input name="name" placeholder="Full name" value={form.name} onChange={change} required />
           <input name="email" type="email" placeholder="Email" value={form.email} onChange={change} required />
           <input name="phone" placeholder="Phone" value={form.phone} onChange={change} />
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="btn-group">
             <button type="submit">{editId ? "Update" : "Add"}</button>
             {editId && (
               <button type="button" className="ghost" onClick={() => { setEditId(null); setForm(empty); }}>

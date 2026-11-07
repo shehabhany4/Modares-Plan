@@ -28,14 +28,22 @@ export default function Login({ onLogin }) {
     <div className="auth-page">
       <div className="auth-card">
         <h2>🎓 YSA School</h2>
-        <p className="sub">{isRegister ? "Create your account" : "Sign in to manage students"}</p>
+        <p className="sub">{isRegister ? "Create your teacher account" : "Sign in to manage your classes"}</p>
         <form onSubmit={submit} className="form-stack">
-          {isRegister && <input name="name" placeholder="Full name" value={form.name} onChange={change} required />}
+          {isRegister && (
+            <input name="name" placeholder="Full name" value={form.name} onChange={change} required />
+          )}
           <input name="email" type="email" placeholder="Email" value={form.email} onChange={change} required />
           <input name="password" type="password" placeholder="Password" value={form.password} onChange={change} required />
           {isRegister && (
-            <input name="password_confirmation" type="password" placeholder="Confirm password"
-              value={form.password_confirmation} onChange={change} required />
+            <input
+              name="password_confirmation"
+              type="password"
+              placeholder="Confirm password"
+              value={form.password_confirmation}
+              onChange={change}
+              required
+            />
           )}
           <button type="submit" disabled={loading}>
             {loading ? "Please wait..." : isRegister ? "Create account" : "Login"}

@@ -11,4 +11,18 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// If the token is no longer valid (e.g. account deleted), send the user back to login
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    const url = err.config?.url || "";
+    const isAuthCall = url.includes("/login") || url.includes("/register");
+    if (err.response?.status === 401 && !isAuthCall && localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+    return Promise.reject(err);
+  }
+);
+
 export default api;

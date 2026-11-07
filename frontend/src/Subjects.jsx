@@ -58,7 +58,7 @@ export default function Subjects() {
             <option value="">No teacher</option>
             {teachers.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="btn-group">
             <button type="submit">{editId ? "Update" : "Add"}</button>
             {editId && (
               <button type="button" className="ghost" onClick={() => { setEditId(null); setForm(empty); }}>

@@ -53,8 +53,8 @@ export default function Attendance() {
   };
 
   const present = rows.filter((r) => r.status === "present").length;
-  const absent = rows.filter((r) => r.status === "absent").length;
   const late = rows.filter((r) => r.status === "late").length;
+  const absent = rows.filter((r) => r.status === "absent").length;
 
   return (
     <>
@@ -65,19 +65,15 @@ export default function Attendance() {
       </div>
 
       <div className="card">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 14 }}>
-          <h2 style={{ margin: 0 }}>Daily attendance</h2>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div className="toolbar">
+          <h2>Daily attendance</h2>
+          <div className="group">
             <input type="date" value={date} onChange={(e) => setDate(e.target.value)} style={{ width: 170 }} />
             <button className="ghost sm" onClick={() => markAll("present")}>All present</button>
             <button className="sm" onClick={save}>Save</button>
           </div>
         </div>
-        {msg && (
-          <div style={{ background: "#dcfce7", color: "#166534", padding: "10px 12px", borderRadius: 8, marginBottom: 12 }}>
-            {msg}
-          </div>
-        )}
+        {msg && <div className="success">{msg}</div>}
         {error && <div className="error">{error}</div>}
 
         <div className="table-wrap">
@@ -90,7 +86,7 @@ export default function Attendance() {
                   <td>{r.name}</td>
                   <td>{r.grade ? <span className="badge">Grade {r.grade}</span> : "-"}</td>
                   <td>
-                    <div style={{ display: "flex", gap: 6 }}>
+                    <div className="btn-group">
                       {options.map(([key, label, color]) => (
                         <button
                           key={key}
@@ -121,6 +117,7 @@ export default function Attendance() {
               <tr><th>Student</th><th>Days recorded</th><th>Present/Late</th><th>Absent</th><th>Rate</th></tr>
             </thead>
             <tbody>
+              {summary.length === 0 && <tr><td colSpan="5" className="empty">No data yet</td></tr>}
               {summary.map((s) => (
                 <tr key={s.student_id}>
                   <td>{s.name}</td>
