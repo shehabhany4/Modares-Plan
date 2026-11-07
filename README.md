@@ -1,23 +1,29 @@
-# YSA School – Full Stack Student Management
+# YSA School – Full Stack School Management
 
-A full stack web application for managing students, built with **Laravel (REST API)** and **React**.
+A full stack web application that helps small schools and tutoring centers manage students, teachers, subjects and daily attendance in one place. Built with **Laravel (REST API)** and **React**.
+
+## Why this project?
+Many small schools and tutoring centers still track students and attendance on paper or scattered spreadsheets. This app gives teachers a single dashboard to manage students, teachers and subjects, record daily attendance, see attendance rates per student, and export class lists to CSV or print them.
+
+## Live Demo
+- Frontend: https://ysa-school-web.vercel.app
+- API: https://ysa-school-production.up.railway.app/api
+- Demo account: `demo@ysa.com` / `123456`
 
 ## Tech Stack
 - **Backend:** Laravel 12, Laravel Sanctum (token authentication), MySQL
 - **Frontend:** React (Vite), Axios
 - **API:** RESTful JSON endpoints
+- **Deployment:** Railway (API + MySQL, Docker), Vercel (frontend)
 
 ## Features
-- User registration and login with token-based authentication (Sanctum)
+- Register / login with token-based authentication (Sanctum)
 - Protected API routes
-- Full CRUD for Students, Teachers and Subjects (REST API)
+- Full CRUD for Students, Teachers and Subjects
 - Relational database: Teacher → Subjects → Students
-- React dashboard with Students, Teachers and Subjects pages (full CRUD)
-
-## Live Demo
-- Frontend: https://ysa-school-web.vercel.app
-- API: https://ysa-school-production.up.railway.app/api
-- Demo account: demo@ysa.com / 123456
+- Daily attendance (present / late / absent) with attendance rate per student
+- Search students, export the list to CSV, and print it
+- Responsive React dashboard with Students, Teachers, Subjects and Attendance pages
 
 ## API Endpoints
 
@@ -33,6 +39,9 @@ A full stack web application for managing students, built with **Laravel (REST A
 | GET/PUT/DELETE | /api/teachers/{id} | Yes | Show / update / delete |
 | GET/POST | /api/subjects | Yes | List / create subjects |
 | GET/PUT/DELETE | /api/subjects/{id} | Yes | Show / update / delete |
+| GET | /api/attendance?date=YYYY-MM-DD | Yes | Students with their status for a day |
+| POST | /api/attendance | Yes | Save attendance for a day |
+| GET | /api/attendance/summary | Yes | Attendance rate per student |
 
 ## Run Locally
 
@@ -54,6 +63,7 @@ npm install
 npm run dev
 ```
 The frontend runs on http://localhost:5173 and the API on http://127.0.0.1:8000.
+To use a different API, set `VITE_API_URL` (e.g. `VITE_API_URL=https://your-api/api`).
 
 ## Author
 Shehab Hany – Faculty of Computers and Artificial Intelligence, Benha University
