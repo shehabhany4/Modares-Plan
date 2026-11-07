@@ -12,11 +12,12 @@ A full stack web application for managing students, built with **Laravel (REST A
 - Protected API routes
 - Full CRUD for Students, Teachers and Subjects (REST API)
 - Relational database: Teacher → Subjects → Students
-- React dashboard to add, edit and delete students
+- React dashboard to add, edit, delete and search students
 
 ## Live Demo
-- Frontend: _add link_
-- API: _add link_
+- Frontend: https://ysa-school-web.vercel.app
+- API: https://ysa-school-production.up.railway.app/api
+- Demo account: demo@ysa.com / 123456
 
 ## API Endpoints
 
